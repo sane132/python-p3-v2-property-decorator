@@ -1,39 +1,29 @@
-APPROVED_BREEDS = [
-    "Mastiff",
-    "Chihuahua",
-    "Corgi",
-    "Shar Pei",
-    "Beagle",
-    "French Bulldog",
-    "Pug",
-    "Pointer"
-]
-
-
 class Dog:
-    def __init__(self, name='Fido', breed='Mastiff'):
+    approved_breeds = [
+        "Mastiff", "Chihuahua", "Corgi", "Shar Pei",
+        "Beagle", "French Bulldog", "Pug", "Pointer"
+    ]
+
+    def __init__(self, name="", breed="Mutt"):
         self.name = name
         self.breed = breed
 
-    def get_name(self):
+    @property
+    def name(self):
         return self._name
 
-    def set_name(self, name):
-        if isinstance(name, str) and 1 <= len(name) <= 25:
-            self._name = name.title()
-        else:
-            raise ValueError(
-                "Name must be string between 1 and 25 characters.")
+    @name.setter
+    def name(self, value):
+        if not isinstance(value, str) or not (1 <= len(value) <= 25):
+            raise ValueError("Name must be string between 1 and 25 characters.")
+        self._name = value
 
-    name = property(get_name, set_name)
-
-    def get_breed(self):
+    @property
+    def breed(self):
         return self._breed
 
-    def set_breed(self, breed):
-        if breed in APPROVED_BREEDS:
-            self._breed = breed
-        else:
+    @breed.setter
+    def breed(self, value):
+        if value not in self.approved_breeds:
             raise ValueError("Breed must be in list of approved breeds.")
-
-    breed = property(get_breed, set_breed)
+        self._breed = value
